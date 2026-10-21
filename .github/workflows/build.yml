@@ -494,7 +494,7 @@ jobs:
           prepare: |
             export IGNORE_OSVERSION=yes
             pkg update -f
-            pkg install -y pkgconf cmake ninja gmake
+            pkg install -y pkgconf cmake-core ninja gmake
 
       - name: Start OpenBSD VM
         uses: vmactions/openbsd-vm@v1
