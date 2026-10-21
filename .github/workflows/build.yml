@@ -449,14 +449,6 @@ jobs:
             vm_arch: aarch64
             host_label: aarch64-freebsd
             release_only: true
-          - os: FreeBSD
-            vm_arch: riscv64
-            host_label: riscv64-freebsd
-            release_only: false
-          - os: FreeBSD
-            vm_arch: powerpc64
-            host_label: powerpc64-freebsd
-            release_only: false
           - os: OpenBSD
             vm_arch: x86_64
             host_label: x86_64-openbsd
@@ -469,10 +461,6 @@ jobs:
             vm_arch: riscv64
             host_label: riscv64-openbsd
             release_only: true
-          - os: OpenBSD
-            vm_arch: sparc64
-            host_label: sparc64-openbsd
-            release_only: false
     steps:
       - name: Skip release-only ${{ matrix.os }} target
         if: ${{ matrix.release_only && !startsWith(github.ref, 'refs/tags/') }}
@@ -486,15 +474,15 @@ jobs:
         uses: vmactions/freebsd-vm@v1
         if: ${{ matrix.os == 'FreeBSD' && (!matrix.release_only || startsWith(github.ref, 'refs/tags/')) }}
         with:
-          release: "14.3"
+          release: "15.1"
           arch: ${{ matrix.vm_arch }}
           cpu: 4
           mem: 8192
           custom-shell-name: vmsh
           prepare: |
-            export IGNORE_OSVERSION=yes ASSUME_ALWAYS_YES=yes
+            export IGNORE_OSVERSION=yes
             pkg update -f
-            pkg install -U pkgconf cmake-core ninja gmake
+            pkg install -y pkgconf cmake ninja gmake
 
       - name: Start OpenBSD VM
         uses: vmactions/openbsd-vm@v1
@@ -620,3 +608,4 @@ jobs:
         with:
           name: artifacts.ios-xcframework
           path: ${{ runner.temp }}/libcurl-impersonate*.ios-xcframework.tar.gz
+          
