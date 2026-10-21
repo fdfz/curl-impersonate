@@ -492,9 +492,9 @@ jobs:
           mem: 8192
           custom-shell-name: vmsh
           prepare: |
-            export IGNORE_OSVERSION=yes
+            export IGNORE_OSVERSION=yes ASSUME_ALWAYS_YES=yes
             pkg update -f
-            pkg install -y pkgconf cmake ninja gmake
+            pkg install -U pkgconf cmake-core ninja gmake
 
       - name: Start OpenBSD VM
         uses: vmactions/openbsd-vm@v1
