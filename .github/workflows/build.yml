@@ -1,4 +1,4 @@
-name: "Build on Linux/Darwin/BSD"
+name: "Build on Linux/Darwin/BS"
 
 on:
   workflow_call:
